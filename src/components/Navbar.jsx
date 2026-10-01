@@ -1,9 +1,25 @@
 'use client';
 import { useState } from "react";
 import { Link, Button } from "@heroui/react";
+import { authClient } from "../lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const { data: session } = authClient.useSession();
+  console.log("Session data:", session);
+
+  const handleSignout = async () => {
+      await authClient.signOut({
+      fetchOptions: {
+      onSuccess: () => {
+      router.push("/sign-in"); // redirect to login page
+    },
+  },
+});
+  }
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
@@ -41,7 +57,9 @@ export default function Navbar() {
           </button>
           <div className="flex items-center gap-3">
             {/* <Logo /> */}
-            <p className="font-bold">ACME</p>
+            <Link href="/" className="font-bold">
+              Home
+            </Link>
           </div>
         </div>
         <ul className="hidden items-center gap-4 md:flex">
@@ -53,16 +71,22 @@ export default function Navbar() {
               Dashboard
             </Link>
           </li>
-          <li>
-            <Link href="#">Pricing</Link>
+          {
+            session?.user && <li>
+            <Link href="/profile">Profile</Link>
           </li>
+          }
         </ul>
         <div className="hidden items-center gap-4 md:flex">
-          <Link href="#">Login</Link>
-          <Button>Sign Up</Button>
+          { session?.user ?
+           <><Button onClick={handleSignout}>Logout</Button></>
+            : 
+        <><Link href="/sign-in"><Button>Login</Button></Link>
+        <Link href="/sign-up"><Button>Sign Up</Button></Link>
+          </>}
         </div>
       </header>
-      {isMenuOpen && (
+      {/* {isMenuOpen && (
         <div className="border-t border-separator md:hidden">
           <ul className="flex flex-col gap-2 p-4">
             <li>
@@ -88,7 +112,7 @@ export default function Navbar() {
             </li>
           </ul>
         </div>
-      )}
+      )} */}
     </nav>
   );
 }
