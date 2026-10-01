@@ -36,3 +36,11 @@ await authClient.signOut({
     },
   },
 });
+
+16. create proxy.js for private route
+17. Go to google console and create outhid =>set client id and secret in .env
+18. add in auth.js --- socialprovider:
+19. email verification -> 
+a. resend.com
+b. create api key
+c. add api key in .env

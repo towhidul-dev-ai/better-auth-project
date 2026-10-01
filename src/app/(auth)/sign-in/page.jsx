@@ -21,9 +21,17 @@ const SignIn = () => {
 });
 
     console.log(SignInData, error);
+
+
   };
+
+  const login = async () => {
+  const data = await signIn.social({
+    provider: "google",
+  });
+};
     return (
-        <div className='flex justify-center'>
+        <div className='flex justify-center '>
             <Form className="flex w-96 flex-col gap-4" onSubmit={onSubmit}>
       <TextField
         isRequired
@@ -72,7 +80,9 @@ const SignIn = () => {
           Reset
         </Button>
       </div>
+      <Button onClick={login}>Google SignIn</Button>
     </Form>
+    
         </div>
     );
 };
