@@ -77,7 +77,7 @@ export default function Navbar() {
 
           {
               categories?.map(cat => 
-            <li key={cat?._id}><Link><span>{cat?.icon}</span>{cat?.name}</Link></li>)
+            <li key={cat?._id}><Link href={`/category/${cat?.slug}`}><span>{cat?.icon}</span>{cat?.name}</Link></li>)
           }
 
 

@@ -20,7 +20,10 @@ const SignIn = () => {
     
 });
 
-    console.log(SignInData, error);
+    // console.log(SignInData, error);
+
+console.log("SignInData:", SignInData);
+console.log("Error:", error);
 
 
   };
